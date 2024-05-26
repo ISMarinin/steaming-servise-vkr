@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block page_content %}
+    <link rel="stylesheet" href="/static/registry.css">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i" rel="stylesheet">
+<body>
+    <div class="main-w3layouts wrapper">
+        <h1>Вход</h1>
+        <div class="main-agileinfo">
+            <div class="agileits-top">
+                <form method="post">
+                    {% csrf_token %}
+                    <input class="text" type="text" name="username" placeholder="Имя пользователя" required="">
+                    <input class="text" type="password" name="password" placeholder="Пароль" required="" style="margin-top: 2em; margin-bottom: 2em;">
+                    <input type="submit" value="ВОЙТИ">
+                </form>
+                    <p><a href="{% url 'password_reset' %}">Восстановление пароля</a></p>
+                    <p><a href="{% url 'register' %}">Регистрация</a></p>
+                    <p><a href="{% url 'social:begin' 'github' %}">Вход через GitHub</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+{% endblock %}

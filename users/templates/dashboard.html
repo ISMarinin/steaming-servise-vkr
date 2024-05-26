@@ -1,0 +1,60 @@
+
+{% extends 'base.html' %}
+
+{% block page_content %}
+
+<div>
+    {% if user.is_authenticated %}
+        <h1>Профиль пользователя {{ user }}</h1>
+
+        <div class="row">
+            <div class="col-md-6" style="width: 40%; margin-bottom: 2rem">
+                <div class="card mb-4 mb-md-0">
+                  <div class="card-body">
+                    <p><a href="{% url 'logout' %}">Выйти из профиля</a></p>
+                    <p><a href="{% url 'password_change' %}">Сменить пароль</a></p>
+                  </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+        <div class="col-md-6" style="width: 40%">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4">Прогресс по курсам</p>
+                {% for course_result in course_results %}
+                    {% if course_result.score < 100 %}
+                        <p class="mb-1" style="font-size: 1.2rem;"><a href="{% url 'course_detail' course_result.course.pk %}">{{ course_result.course.title}}</a> - {{ course_result.score }}%</p>
+                        <div class="progress rounded" style="height: 7px;">
+                        <div class="progress-bar" role="progressbar" style="width: {{ course_result.score }}%"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+        <div class="col-md-6" style="width: 40%">
+            <div class="card mb-4 mb-md-0">
+              <div class="card-body">
+                <p class="mb-4">Завершенные курсы</p>
+                {% for course_result in course_results %}
+                    {% if course_result.score == 100 %}
+                        <p class="mb-1" style="font-size: 1.2rem;"><a href="{% url 'course_detail' course_result.course.pk %}">{{ course_result.course.title}}</a> - 100%</p>
+                        <div class="progress rounded" style="height: 7px;">
+                        <div class="progress-bar" role="progressbar" style="width: {{ course_result.score }}%"
+                            aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+        </div>
+        </div>
+    {% else %}
+        <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+</div>
+{% endblock %}
